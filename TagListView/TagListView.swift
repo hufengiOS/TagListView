@@ -121,12 +121,6 @@ open class TagListView: UIView {
             rearrangeViews()
         }
     }
-
-    @IBInspectable open dynamic var minWidth: CGFloat = 0 {
-        didSet {
-            rearrangeViews()
-        }
-    }
     
     @objc public enum Alignment: Int {
         case left
@@ -196,6 +190,15 @@ open class TagListView: UIView {
         }
     }
     
+    @IBInspectable open dynamic var removeIconImage: UIImage = UIImage.init() {
+        didSet {
+            defer { rearrangeViews() }
+            tagViews.forEach {
+                $0.removeButtonIcon = removeIconImage
+            }
+        }
+    }
+
     @objc open dynamic var textFont: UIFont = .systemFont(ofSize: 12) {
         didSet {
             defer { rearrangeViews() }
@@ -294,7 +297,6 @@ open class TagListView: UIView {
                 x: currentRowWidth,
                 y: 0)
             tagBackgroundView.frame.size = tagView.bounds.size
-            tagView.frame.size.width = max(minWidth, tagView.frame.size.width)
             tagBackgroundView.layer.shadowColor = shadowColor.cgColor
             tagBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: tagBackgroundView.bounds, cornerRadius: cornerRadius).cgPath
             tagBackgroundView.layer.shadowOffset = shadowOffset
@@ -354,6 +356,7 @@ open class TagListView: UIView {
         tagView.removeButtonIconSize = removeButtonIconSize
         tagView.enableRemoveButton = enableRemoveButton
         tagView.removeIconLineColor = removeIconLineColor
+        tagView.removeButtonIcon = removeIconImage
         tagView.addTarget(self, action: #selector(tagPressed(_:)), for: .touchUpInside)
         tagView.removeButton.addTarget(self, action: #selector(removeButtonPressed(_:)), for: .touchUpInside)
         

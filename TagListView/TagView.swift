@@ -137,6 +137,13 @@ open class TagView: UIButton {
         }
     }
     
+    @IBInspectable open var removeButtonIcon: UIImage = UIImage() {
+        didSet {
+            removeButton.icon = removeButtonIcon
+            updateRightInsets()
+        }
+    }
+
     @IBInspectable open var removeIconLineWidth: CGFloat = 3 {
         didSet {
             removeButton.lineWidth = removeIconLineWidth

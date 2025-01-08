@@ -16,12 +16,14 @@ internal class CloseButton: UIButton {
 
     weak var tagView: TagView?
 
+    var icon: UIImage = UIImage()
+    
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
 
         path.lineWidth = lineWidth
         path.lineCapStyle = .round
-
+        self.setImage(icon, for: UIControl.State.normal)
         let iconFrame = CGRect(
             x: (rect.width - iconSize) / 2.0,
             y: (rect.height - iconSize) / 2.0,
